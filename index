@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex, nofollow" />
+        <title>Está temblando en [país]</title> 
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                font-family: "Chivo", sans-serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+                font-weight: 300;
+                line-height: 1.2;
+                background: rgba(255, 255, 255, 1);
+                color: #222;
+                background-image: linear-gradient(rgba(255, 255, 255, 0.6) 0, rgba(255, 255, 255, 1) 95vh), url("img/fondo.jpg");
+                background-repeat: no-repeat;
+                background-size: 100% auto;
+                background-position: 0px -10vw;
+            }
+            div.container {
+                width: min(800px, 90%);
+                margin: 2rem auto;
+            }
+            h1 {
+                font-size: calc(2rem + 3vw);
+                font-weight: 900;
+                padding: 0.125rem;
+                text-align: center;
+            }
+            h2 {
+                margin: 2rem 0 1rem 0;
+                border-bottom: 1px solid black;
+                font-weight: 800;
+                padding: 0.25rem;
+            }
+
+            h3 {
+                margin: 0;
+                font-weight: 800;
+                padding: 0.25rem;
+            }
+
+            h5 {
+                font-size: calc(0.6rem + 0.6vw);
+                margin: 0 0 2rem 0;
+                font-weight: 800;
+                padding: 0.25rem;
+                text-align: center;
+                letter-spacing: 0.01vw;
+            }
+
+            a {
+                color: #000;
+                font-weight: 400;
+            }
+            a:hover {
+                text-decoration: none;
+            }
+            p {
+                margin: 0.5rem 0;
+                padding: 0.25rem;
+            }
+            code {
+                font-size: 110%;
+                color: #gray;
+                background: #silver;
+                border-radius: 2px;
+                border: 1px solid #eee;
+            }
+            table {
+                width: 100%;
+                text-align: center;
+            }
+            table a {
+                text-decoration: none;
+            }
+            table a:hover:after {
+                content: " ⤴";
+            }
+            th,
+            td {
+                border-bottom: 1px solid black;
+                border-collapse: collapse;
+                padding: 0.25rem;
+            }
+            td {
+                font-size: 90%;
+            }
+            th,
+            td strong {
+                font-weight: 700;
+            }
+            td span {
+                color: #999;
+            }
+            th:nth-child(1),
+            th:nth-child(2),
+            td:nth-child(1),
+            td:nth-child(2) {
+                text-align: left;
+            }
+            footer {
+                border-top: 3px solid black;
+                margin: 2rem 0 0 0;
+                padding: 1rem;
+                text-align: center;
+                font-size: 80%;
+                letter-spacing: 1px;
+            }
+            .escondido {
+                display: none;
+            }
+
+            th {
+                line-height: 1.5;
+            }
+
+            th svg {
+                width: 1.5rem;
+                height: 1.5rem;
+                margin-bottom: -0.25rem;
+                margin-left: -0.25rem;
+                fill: #2b678c;
+            }
+
+            div.mapas {
+                width: 100%;
+                height: 400px;
+                margin: 1rem 0 3rem 0;
+                box-shadow: 0 0 4px #eee;
+            }
+
+            .leaflet-control {
+                display: none;
+            }
+
+            /* Lo que sigue es para la historia */
+
+            p.lead {
+                font-size: 120%;
+                font-weight: 200;
+            }
+
+            p em {
+                font-weight: 700;
+                font-style: normal;
+            }
+
+            p span {
+                border-radius: 6px 6px;
+                padding: 0 0.5rem 0 1.5rem;
+                background-color: #a5d8f8;
+                background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M5.47,58.58H17A44.19,44.19,0,0,0,5.47,82.93Zm17.84,0h7.62l-3.56-35.8,13.4-5.66V30.65l12.06,4.8-4.06,22A31.82,31.82,0,0,0,18.39,89.08H9.53A40.25,40.25,0,0,1,23.31,58.58ZM50,61.9A27.18,27.18,0,0,1,77.18,89.08h-9a18.27,18.27,0,1,0-36.53,0H22.82A27.18,27.18,0,0,1,50,61.9Zm0,13.28a13.86,13.86,0,0,1,13.78,13.9H54.92a4.92,4.92,0,0,0-9.84,0h-9A14,14,0,0,1,50,75.18Zm8.24-16.6a35.85,35.85,0,0,0-5.29-1L57.5,32.87,45,28V15.28l4.42-1.85L69.56,18.6l3.81,40h3.32a40.25,40.25,0,0,1,13.78,30.5H81.61A31.68,31.68,0,0,0,58.24,58.58Zm24.72,0H94.53V82.93A45.16,45.16,0,0,0,83,58.58Z"></path></svg>');
+                background-position: 0.3rem 0;
+                background-size: 1rem 1rem;
+                background-repeat: no-repeat;
+            }
+
+            figure {
+                width: 80%;
+                margin: 1rem auto;
+                padding: 0.25rem;
+                border: 1px solid #eee;
+                box-shadow: 0 0 5px #fcfcfc;
+            }
+            figure img {
+                width: 100%;
+                height: auto;
+            }
+
+            figure figcaption {
+                font-size: 90%;
+                color: gray;
+                padding: 0.5rem;
+            }
+
+            .fuentes {
+                margin-top: 2rem;
+                border: 1px solid #eee;
+                background: #fafafa;
+                padding: 1rem;
+                font-size: 90%;
+                color: #444;
+            }
+        </style>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    </head>
+    <body>
+        <svg xmlns="http://www.w3.org/2000/svg" class="escondido">
+            <symbol id="location" viewBox="0 0 100 100">
+                <path d="M36.73,36.09a13,13,0,0,0,13,12.67A12.65,12.65,0,0,0,62.44,36.09a13.22,13.22,0,0,0-9.59-12.67v-18A31.37,31.37,0,0,1,81.14,36.58a30.89,30.89,0,0,1-4.55,16.36l-25,41.21H47.93L23,52.94A31.36,31.36,0,0,1,46.7,5.46v18A13.41,13.41,0,0,0,36.73,36.09Z"></path>
+            </symbol>
+
+            <symbol id="time" viewBox="0 0 100 100">
+                <path d="M15.44,49H6.33a43.68,43.68,0,0,1,87.34,0L89.24,52.1,84.56,49a34.57,34.57,0,0,0-69.12,0Zm1.84,29.77A44.16,44.16,0,0,1,6.83,56.65h9.22a33.86,33.86,0,0,0,7.63,15.62Zm5.66,5.41,6.4-6.52A34.17,34.17,0,0,0,46.19,84.2v9.22A42.43,42.43,0,0,1,22.94,84.2ZM86.53,64.64,54.31,47.91V25.16H47.05V52.22l36,18.94ZM77.55,84a43.22,43.22,0,0,1-23.61,9.47V84.2a32.11,32.11,0,0,0,17-6.77Z"></path>
+            </symbol>
+
+            <symbol id="tsunami" viewBox="0 0 100 100">
+                <path d="M91.33,88.22H8.92c-2.22,0-3.57-1.23-3.57-3a4.63,4.63,0,0,1,.61-2L17.77,62.51c5.17-9,16.36-13.9,27.06-13.9,11.57,0,17.35,5.54,17.35,10.46,0,4.3-3.32,7.13-6.77,8.12H53.07a3.49,3.49,0,0,0-3.56-3.82,3.42,3.42,0,0,0-3.32,3.45c0,3.81,4.79,7.5,13.16,7.5,7.75,0,18-3.57,24.6-9.1L94.28,83.3a3.51,3.51,0,0,1,.37,1.84A3,3,0,0,1,91.33,88.22Zm-10.21-28L52.71,10.36a3.19,3.19,0,0,0-5.66,0L26.14,47.51a36.15,36.15,0,0,1,12.67-4.06L49.88,23.89,73.37,64.36A19.72,19.72,0,0,0,81.12,60.17Z"></path>
+            </symbol>
+
+            <symbol id="magnitude" viewBox="0 0 100 100">
+                <path d="M5.47,58.58H17A44.19,44.19,0,0,0,5.47,82.93Zm17.84,0h7.62l-3.56-35.8,13.4-5.66V30.65l12.06,4.8-4.06,22A31.82,31.82,0,0,0,18.39,89.08H9.53A40.25,40.25,0,0,1,23.31,58.58ZM50,61.9A27.18,27.18,0,0,1,77.18,89.08h-9a18.27,18.27,0,1,0-36.53,0H22.82A27.18,27.18,0,0,1,50,61.9Zm0,13.28a13.86,13.86,0,0,1,13.78,13.9H54.92a4.92,4.92,0,0,0-9.84,0h-9A14,14,0,0,1,50,75.18Zm8.24-16.6a35.85,35.85,0,0,0-5.29-1L57.5,32.87,45,28V15.28l4.42-1.85L69.56,18.6l3.81,40h3.32a40.25,40.25,0,0,1,13.78,30.5H81.61A31.68,31.68,0,0,0,58.24,58.58Zm24.72,0H94.53V82.93A45.16,45.16,0,0,0,83,58.58Z"></path>
+            </symbol>
+        </svg>
+
+        <div class="container">
+            <h1>
+                Está temblando<br />
+                en Turquía
+            </h1>
+            <h5>Diseño y visualización de información | Universidad de Chile</h5>
+            <p>
+                El <abbr title="United States Geological Survey">USGS</abbr> (Servicio Geológico de Estados Unidos) es responsable del
+                <a href="https://www.usgs.gov/programs/earthquake-hazards" target="_blank">Earthquake Hazards Program</a>, que monitorea e informa sobre movimientos telúricos, además de evaluar sus impactos y riesgos. Los resultados de su
+                monitoreo son compartidos mediante <a href="https://earthquake.usgs.gov/earthquakes/feed/" target="_blank">Real-time Notifications</a>, que pueden consultarse en distintos formatos.
+            </p>
+            <p>
+                Entre los compartidos está el GeoJSON Summary Format, que es actualizado a cada minuto y tiene una estructura (Output) que se explica en su página oficial. Aprovechando la
+                <a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php" target="_blank">explicación de la estructura (Output)</a>, y lo ya preparado en este código fuente, que entra al <code>features:[]</code> para obtener
+                los datos, podemos visualizar lo que sigue:
+            </p>
+            <h2>En Turquía</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <svg><use href="#location"></use></svg> place
+                        </th>
+                        <th>
+                            <svg><use href="#time"></use></svg> time
+                        </th>
+                        <th>
+                            <svg><use href="#magnitude"></use></svg> mag
+                        </th>
+                        <th>
+                            <svg><use href="#tsunami"></use></svg> tsunami
+                        </th>
+                        
+                    </tr>
+                </thead> 
+                <tbody id="cl"></tbody>
+                
+            </table>
+
+            <div class="mapas" id="mapaCL"></div>
+
+            <h2>Turquía comparando con otros países</h2>
+            <p>Registros sobre 3.9 M del último mes, comparado con Japón y México</p>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50" id="viz"></svg>
+
+            <h2>Historia de terremotos en Turquía</h2>
+
+            <p class="lead">
+                Turquía se encuentra en una región con intensa actividad sísmica, situada dentro de la compleja zona de colisión que separa las placas euroasiática, africana y arábiga. La mayor parte de su territorio descansa sobre la microplaca de Anatolia, delimitada por dos grandes fallas de deslizamiento lateral: la Falla de Anatolia Norte y la Falla de Anatolia Este. En el oeste del país, la dinámica tectónica está influida por un régimen de extensión asociado al mar Egeo, resultado del desplazamiento hacia el sur del arco helénico. Por su parte, el extremo oriental de Turquía forma parte del límite occidental del cinturón montañoso de Zagros, donde predominan procesos de compresión y cabalgamiento.
+            </p>
+
+          
+
+            <p> Aquí se mencionará los principales terremotos registrados desde 1900 hacia adelante.</p>
+
+            <p>El 9 de agosto de 1912 ocurrió un sismo en Mürefte y tuvo una magnitud de <span>7,3 </span>, lamentablemente causó la muerte de <em>3.000 personas.</em> 
+            Si seguimos el orden cronológico de la historia, continuamos con el terremoto ocurrido el 27 de diciembre de 1939 en Erzincan, este tuvo una magnitud de<span> 7,8 </span>. Este fue uno de los sismos <em>más mortíferos </em> de la historia turca, tuvo más de 30 000 fallecidos.
+            <p>El 20 de diciembre de 1942 la tierra volvió a sacudirse en Niksar–Erbaa y de <span>7,0</span> fue su magnitud. Ocurrió en el norte de Anatolia, y dejó <em>graves daños estructurales. </em>
+     </p>
+
+            <figure>
+                <img src="https://scontent.fscl9-1.fna.fbcdn.net/v/t1.6435-9/131926035_3501211669989058_3804807022637943654_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeG_xqfYXmm9nSj9GGYS2zYQVefFsWWHSDtV58WxZYdIO5FIIoBdMZYLj7RVK9EeadJZmWCkL65T5G_Jp0ceILvY&_nc_ohc=gAZlQrk-OcIQ7kNvwGIFt6S&_nc_oc=AdkcRUsbif77PMIzsJpWdeOnVbxfByM7EedyMd028iZEIIQmXDAlilIULowBKaOENPY&_nc_zt=23&_nc_ht=scontent.fscl9-1.fna&_nc_gid=E3OvYf0lbKYtuQXMBCabOg&oh=00_AfgTje2Iso-1HdVTkpO9luYZLHZZjVr_uu_oIpiVuWUiYA&oe=6930DD9B" />
+                <figcaption>Facebook</figcaption>
+            </figure>
+            
+           <h2>Aquellos considerados catastróficos</h2>
+            <p>El día 26 de noviembre de 1943 se sintió un terremoto cerca de las ciudades Tosya–Ladik, y se dice que tuvo una magnitud de  <span>7,6 </span>, pero fue percibido con una magnitud de XI, un grado <em> catastrófico.</em> 
+           .</p>
+
+            <p>En Gerede, ocurrió un sismo de <span>7,5 </span> el 1 de febrero de 1944, y al igual que el anterior, fue considerado catastrófico, ya que tuvo una <em>intensidad máxima percibida de IX-X grados </em> en escala Mercalli. Su epicentro fue en Anatolia noroccidental, y dejó más de mil muertos
+             </p>
+
+            <p>El 18 de marzo de 1953 la tierra se sacudió a las 21:06, específicamente en Yenice y tuvo una magnitud de <span>7,4 </span> righter, pero fue sentido con una magnitud de IX grados en la escala Mercalli. Fue sentido en todas las <em>islas del Egeo </em> y en gran parte de Grecia Continental.
+             </p>
+             
+             <figure>
+                <img src="https://static.daktilo.com/sites/1382/uploads/2024/11/26/ffgo3rixeaunnbq.jpg" />
+                <figcaption>Terremoto en Tosya-Ladik. Kastamonu Güncel</figcaption>
+            </figure>
+            
+             <figure>
+                <img src="https://mengenhaber.com/wp-content/uploads/2025/02/1944_mengen-gerede-depremi.jpg" />
+                <figcaption>Terremoto de Bolu-Gerede. Mengen Haber</figcaption>
+            </figure>
+            
+         
+            
+            <p>En Varto, ocurrió un sismo el 19 de agosto de 1966 y fue de magnitud <span>6,8.</span> Sucedió después de un temblor de <span>5,6 </span> grados el 7 de marzo de este mismo año.
+                </p>
+                
+            <p>A las dos de la tarde de un 24 de noviembre de 1976, sucedió otro temblor en Muradiye– Çaldıran, y tuvo una magnitud de <span>7,5.</span> Este duró apenas <em>seis segundos.</em>
+            </p>
+            
+            <p>En el este de Turquía, Erzincan, se percibió un sismo de <span>6,7</span> el 13 de marzo de 1992. Posteriormente hubo más de <em>3000 réplicas </em>, incluyendo una de <span>5,8 </span> grados que sucedió dos días después. 
+             </p>
+            
+            <p>La tierra se sacudió otra vez, pero en esta ocasión fue el 17 de agosto de 1999 en Izmit y fue de <span>7,6 </span> grados richter. Este fue seguido por un tsunami que acabó con la vida de 155 personas, y <em> sus olas llegaron a alcanzar los 2,52 m.</em> Tres meses después, exactamente el 12 de noviembre de 1999, se sintió otro temblor en Düzce, a 100 km de Izmit y tuvo una magnitud de <span>7,2</span> grados. Estos dos sismos fueron provocados por el movimiento de la falla del norte de Anatolia.
+            </p>
+            
+            <figure>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Duzce_1999_earthquake_damage_Bilham_892.jpg/330px-Duzce_1999_earthquake_damage_Bilham_892.jpg" />
+                <figcaption>Terremoto de Düzce. Wikipedia</figcaption>
+            </figure>
+            
+            <p>El primer sismo importante del siglo XXI ocurrió el 23 de octubre de 2011, y su epicentro fue en la provincia de Van. Tuvo una magnitud de <span>7,1 </span> grados richter, y en escala mercalli fue de VIII. Se produjo <em> cerca de la superficie, </em> lo que dañó 11.232 edificios y dejó 604 muertos.
+          </p>
+            <p>En la segunda mitad de la década del 2010, un movimiento telúrico se sintió en Bodrum. Fue el 21 de julio de 2017 en que afectó el suroeste turco y la isla griega de Kos, este sismo de magnitud <span>6,6. </span> 
+               </p>
+               
+            <p>Comenzando el 2020, el 24 de enero, Sivrice fue el epicentro de un terremoto de magnitud <span>6,8 </span> en escala righter. Este sismo de <em>40 segundos </em> dejó graves daños en un radio de 40 km del epicentro y decenas de muertos.
+           .</p>
+           
+            <p>Es difícil sorprender al mar Egeo con temblores, y el ocurrido el 30 de octubre de 2020 no fue la excepción. Este fue de <span>7,0 </span> grados, y dejó fuertes daños en Izmir y zonas costeras; dejó más de 117 victimas y 1034 personas heridas.</p>
+            <p>En 2023, un movimiento telúrico afectó al sur de Turquía y al norte de Siria. Fue el 6 de febrero el día en que este sismo de <span>7,8</span> grados azotó estos países. Su epicentro se ubicó a 37 km al noroeste de Gaziantep, y lamentablemente dejó graves daños y decenas de miles de fallecidos.
+           </p>
+           
+            <figure>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Collage_of_2023_Turkey%E2%80%93Syria_earthquake.jpg/1024px-Collage_of_2023_Turkey%E2%80%93Syria_earthquake.jpg" />
+                <figcaption>Terremoto de Turquía y Siria. Wikipedia</figcaption>
+            </figure>
+            
+            <p>Se puede apreciar que claramente Turquía sufre de constantes movimientos telúricos, desde temblores de 4,0 hasta los 7,8 grados richter. Los más grandes aún no han sobrepasado los 8,0 grados, y aún así dejan graves daños y decenas de decesos, esto se debe a que está ubicado entre cuatro placas tectónicas: Anatolia, Arábiga, Euroasiática y Africana.
+            <br> Tampoco hay que dejar de lado la infraestructura <em>vulnerable </em> de las ciudades de Turquía; tienen estructuras de <em>hormigón y ladrillos. </em> 
+            <br> Si lo comparamos con Japón, a pesar que este país asiático igualmente sufre terremotos de magnitudes catastróficas, tienen un mejor diseño de sus infraestructuras.</p>
+
+            <div class="fuentes">
+                <h3>Fuentes:</h3>
+                <p>Lista de terremotos en Turquía: <a href="#">https://en.wikipedia.org/wiki/List_of_earthquakes_in_Turkey</a>.</p>
+                <p>Imágenes que dejó el temblor de Niksar-Erbaa: <a href="#">https://web.facebook.com/kadimdurmaz60/posts/merkez-%C3%BCss%C3%BC-erbaa-niksar-hatt%C4%B1-olan-20-aral%C4%B1k-1942-tarihinde-yerel-saat-ile-1703/3501215943321964/?_rdc=1&_rdr#</a>.</p>
+                <p>Terremoto en Bolu-Gerede: <a href="#">https://en.wikipedia.org/wiki/1944_Bolu%E2%80%93Gerede_earthquake</a>.</p>
+                <p>Terremoto en Yenice–Gönen de 1953: <a href="#">https://en.wikipedia.org/wiki/1953_Yenice%E2%80%93G%C3%B6nen_earthquake</a>.</p>
+                <p>Temblor de Tosya–Ladik: <a href="#">https://en.wikipedia.org/wiki/1943_Tosya%E2%80%93Ladik_earthquake</a>.</p>
+                <p>Terremoto en Gerede: <a href="#">https://mengenhaber.com/1944-bolu-gerede-depremi-81-yil-once-bugun-yasandi/</a>.</p>
+                <p>Temblor en Yenice-Gönen: <a href="#">https://www.mcgill.ca/earthquake-memory-turkiye/article/1953-canakkale/</a>.</p>
+                <p>Sismo en Varto: <a href="#">https://en.wikipedia.org/wiki/1966_Varto_earthquake</a>.</p>
+                <p>Terremoto en 1976 en Çaldıran–Muradiye: <a href="#">https://en.wikipedia.org/wiki/1976_%C3%87ald%C4%B1ran%E2%80%93Muradiye_earthquake</a>.</p>
+                <p>Terremoto de İzmit: <a href="#">https://en.wikipedia.org/wiki/1999_%C4%B0zmit_earthquake</a>.</p>
+                <p>Terremoto de Düzce: <a href="#">https://en.wikipedia.org/wiki/1999_D%C3%BCzce_earthquake</a>.</p>
+                <p>Sismo de Erzincan: <a href="#">https://en.wikipedia.org/wiki/1992_Erzincan_earthquake</a>.</p>
+                <p>Terremoto en Van: <a href="#">https://en.wikipedia.org/wiki/2011_Van_earthquakes</a>.</p>
+                <p>Temblor de Elazığ: <a href="#">https://en.wikipedia.org/wiki/2020_Elaz%C4%B1%C4%9F_earthquake</a>.</p>
+                <p>Terremoto en Mar Egeo: <a href="#">https://en.wikipedia.org/wiki/2020_Aegean_Sea_earthquake</a>.</p>
+                <p>Terremotos en Turquía y Siria: <a href="#">https://en.wikipedia.org/wiki/2023_Turkey%E2%80%93Syria_earthquakes</a>.</p>
+                <p>Terremoto en Turquía: ¿Por qué muchos edificios se derrumbaron como un panqueque?: <a href="#">https://theconversation.com/terremoto-en-turquia-por-que-muchos-edificios-se-derrumbaron-como-un-panqueque-199419#:~:text=Miles%20de%20a%C3%B1os%20de%20terremotos,y%20en%20otras%20del%20mundo.</a>.</p>
+                <p>¿Por qué se producen terremotos de gran magnitud en la zona de Turquía y Siria?: <a href="#">https://elpais.com/ciencia/2023-02-07/por-que-se-producen-terremotos-de-gran-magnitud-en-la-zona-de-turquia-y-siria.html</a>.</p>
+                <p>Terremotos en Turquía y Siria Por qué no es lo mismo Turquía que Japón: "En cuestión de terremotos, la pobreza va unida a un mayor desastre": <a href="#">https://www.rtve.es/noticias/20230207/turquia-japon-terremotos-pobreza-mayor-desastre/2422159.shtml</a>.</p>
+            </div>
+
+            <footer>
+                <p>Desarrollado por <a href="#" target="_blank">Carla González</a> &copy; 2025</p>
+            </footer>
+        </div>
+        <script>
+             const chilenos = document.getElementById("cl");
+           
+
+            var conteoTurkey = 0;
+            var conteoMexicanos = 0;
+            var conteoJaponeses = 0;
+            
+
+            async function datos(url) {
+                try {
+                    let consulta = await fetch(url);
+                    let data = await consulta.json();
+                    let temblores = data.features;
+                    console.log(temblores);
+
+                    //acá meto el mapa
+                    const mapaChile = L.map("mapaCL").setView([39.05232967310744, 35.27239280109079], 5);
+                    const tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    }).addTo(mapaChile);
+
+                    temblores.forEach((t) => {
+                        //si es que dice Chile en el place
+                        if (t.properties.place.includes("Turkey") && t.properties.mag > 3.9) {
+                            chilenos.innerHTML += `<tr>
+                            <td><a href="${t.properties.url}" target="_blank">${t.properties.place}</a></td>
+                            <td>${tiempo(t.properties.time)}</td>
+                            <td>${magnitud(t.properties.mag)}</td>
+                            <td>${tsunami(t.properties.tsunami)}</td>
+                        </tr>`;
+                            conteoTurkey++;
+                            //atención a este cambio
+                            L.marker([t.geometry.coordinates[1], t.geometry.coordinates[0]]).addTo(mapaChile).bindPopup(t.properties.place);
+                        }
+                        // si es que dice Mexico en el place
+                        if (t.properties.place.includes("Mexico") && t.properties.mag > 3.9) {
+                           
+                            conteoMexicanos++;
+                        }
+                        // //si es que dice Japan en el place
+                        if (t.properties.place.includes("Japan") && t.properties.mag > 3.9) {
+                        
+                            conteoJaponeses++;
+                        }
+                      
+                    });
+
+                    document.getElementById("viz").innerHTML = `<g><circle cx="12" cy="25" r="${
+                        conteoTurkey / 3
+                    }" fill="#2A86BF"></circle><text x="12" y="25" font-size="1.5" dominant-baseline="middle" text-anchor="middle" fill="white">${conteoTurkey}</text><text x="12" y="45" font-size="2" dominant-baseline="middle" text-anchor="middle">Turquía</text><g>`;
+
+                    document.getElementById("viz").innerHTML += `<g transform="translate(40)"><circle cx="10" cy="25" r="${
+                        conteoJaponeses / 3
+                    }" fill="#2A86BF"></circle><text x="10" y="25" font-size="1.5" dominant-baseline="middle" text-anchor="middle" fill="white">${conteoJaponeses}</text><text x="10" y="45" font-size="2" dominant-baseline="middle" text-anchor="middle">Japón</text><g>`;
+
+                    document.getElementById("viz").innerHTML += `<g transform="translate(75)"><circle cx="10" cy="25" r="${
+                        conteoMexicanos /3
+                    }" fill="#2A86BF"></circle><text x="10" y="25" font-size="1.5" dominant-baseline="middle" text-anchor="middle" fill="white">${conteoMexicanos}</text><text x="10" y="45" font-size="2" dominant-baseline="middle" text-anchor="middle">México</text><g>`;
+
+                    
+                } catch (error) {
+                    console.error("Error al cargar los datos:", error);
+                }
+            }
+
+            datos("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson");
+
+            function magnitud(x) {
+                var numero = x;
+                if (x > 3.9) {
+                    numero = "<strong>" + x + "</strong>";
+                }
+                return numero;
+            }
+
+            function tiempo(x) {
+                var unix = x;
+                var dato = new Date(unix);
+                var formato = dato.toISOString();
+                var corte = formato.split("T");
+                return corte[0] + " a las " + corte[1].split(":")[0] + ":" + corte[1].split(":")[1] + " hrs.";
+            }
+
+            function tsunami(x) {
+                var mensaje = "<span>Sin alerta</span>";
+                if (x == 1) {
+                    mensaje = "<strong>¡Alerta de tsunami!</strong>";
+                }
+                return mensaje;
+            }
+        </script> 
+    </body>
+</html>
